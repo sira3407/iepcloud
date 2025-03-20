@@ -5,15 +5,28 @@ services:
     ports:
       - "3001:3000"
     volumes:
-      - ./backend:/app
+      - backend_data:/app
     environment:
       NODE_ENV: development
+    networks:
+      - app-network
 
   frontend:
     build: ./frontend
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
+      - frontend_data:/app
     environment:
       NODE_ENV: development
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  backend_data:
+  frontend_data:
+
+networks:
+  app-network:
